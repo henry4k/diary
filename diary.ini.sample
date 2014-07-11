@@ -1,0 +1,8 @@
+[diary]
+locale=de_DE
+file_format=%Y/%B/%d.md
+section_pattern=^## (?P<name>.+)$
+todo_pattern=\[(?P<state>.)\] (?P<name>.+)
+todo_replacement=[{state}] {name}
+todo_empty= 
+todo_checked=x
