@@ -3,20 +3,17 @@ diary
 
 A diary for console cowboys/cowgirls, written in python 3.
 
-Every time you run `./diary.py write` it creates a diary entry for
+Every time you run `./diary.py write` it creates a diary entry for  
 the current date and opens it in your favorite editor.
 
-Diary entries can have sections and todos.
-
+Diary entries can have sections and todos:
 You can use sections to break your diary entries into specific subjects,
 so you can find them more easily later on.
-
 The todo entries have a similar purpose:
 They're meant to remind you to do something.
 
 New diary entries are initialized with section headers
 and todo entries of the previous diary entry.
-
 
 I made this, because I wanted to live a more conscious life.
 And I think writing diary entries daily or at least regulary helps a lot,
