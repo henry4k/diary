@@ -32,6 +32,7 @@ The file should look like this:
 
     [diary]
     locale=de_DE
+    file_mode=700
     file_format=%Y/%B/%d.md
     section_pattern=^## (?P<name>.+)$
     todo_pattern=\[(?P<state>.)\] (?P<name>.+)
@@ -44,6 +45,11 @@ Can be left out.
 Comes handy if you need specific time formatting,
 which is different to the rest of your system.
 Same result as running `LC_ALL=<locale> ./diary.py`.
+
+*file_mode*:  
+Can be left out.
+Files and directories created by diary.py have the permission flags,
+defined in `file_mode`. Defaults to `0755`.
 
 *file_format*:  
 Used to create file names from dates.

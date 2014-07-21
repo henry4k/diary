@@ -2,6 +2,7 @@
 
 import datetime
 
+file_mode = 0o755
 file_format = None
 section_pattern = None
 todo_pattern = None
@@ -14,6 +15,7 @@ def read_config():
     import configparser
     import locale
 
+    global file_mode
     global file_format
     global section_pattern
     global todo_pattern
@@ -30,7 +32,13 @@ def read_config():
     if locale_name:
         locale.setlocale(locale.LC_ALL, locale_name)
 
+    file_mode_str = config['diary']['file_mode']
+    if file_mode_str:
+        file_mode = int(file_mode_str, base=8)
+
     file_format = config['diary']['file_format']
+    if not file_format:
+        raise RuntimeError('file_format missing in config')
 
     section_pattern = re.compile(config['diary']['section_pattern'])
     if not 'name' in section_pattern.groupindex:
@@ -113,18 +121,21 @@ def copy_entry( istream, ostream ):
 
 def create_new():
     import os
+    import os.path
 
     today = datetime.date.today()
     file_name = date_to_entry_file_name(today)
-    file_dir = os.path.dirname(file_name)
-    os.makedirs(file_dir, exist_ok=True)
 
-    previous = get_previous_entry_date(today)
-    if previous:
-        previous_file_name = date_to_entry_file_name(previous)
-        with open(previous_file_name, 'r', encoding='UTF-8') as previous_file:
-            with open(file_name, 'w', encoding='UTF-8') as file:
-                copy_entry(previous_file, file)
+    if not os.path.exists(file_name):
+        file_dir = os.path.dirname(file_name)
+        os.makedirs(file_dir, mode=file_mode, exist_ok=True)
+        previous = get_previous_entry_date(today)
+        if previous:
+            previous_file_name = date_to_entry_file_name(previous)
+            # TODO: Support file_mode here!
+            with open(previous_file_name, 'r', encoding='UTF-8') as previous_file:
+                with open(file_name, 'w', encoding='UTF-8') as file:
+                    copy_entry(previous_file, file)
 
     return file_name
 
