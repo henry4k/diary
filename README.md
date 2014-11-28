@@ -24,7 +24,7 @@ May someone else find this useful. :)
 
 ## Configuration
 
-First you need to create the configuration file.
+First you need to create the configuration file called `diary.ini`.
 Take your time here, since you don't want to change the values later on.
 (Already created diary entries are not adapted automatically.)
 
