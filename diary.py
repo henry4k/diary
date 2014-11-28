@@ -24,7 +24,8 @@ def read_config():
     global todo_checked
 
     config = configparser.ConfigParser(interpolation=None)
-    config.read('diary.ini')
+    if not config.read('diary.ini'):
+        raise RuntimeError('can\'t find diary.ini in current directory')
     if not config.has_section('diary'):
         raise RuntimeError('diary section missing in config')
 
@@ -157,7 +158,6 @@ def print_usage():
 if __name__ == '__main__':
     import sys
 
-    read_config()
     if len(sys.argv) < 2:
         print_usage()
     else:
@@ -166,6 +166,8 @@ if __name__ == '__main__':
         if command == 'help':
             print_usage()
         elif command == 'create':
+            read_config()
             print(create_new())
         elif command == 'write':
+            read_config()
             edit_new()
