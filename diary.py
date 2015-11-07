@@ -130,12 +130,12 @@ def create_new():
     if not os.path.exists(file_name):
         file_dir = os.path.dirname(file_name)
         os.makedirs(file_dir, mode=file_mode, exist_ok=True)
-        previous = get_previous_entry_date(today)
-        if previous:
-            previous_file_name = date_to_entry_file_name(previous)
-            # TODO: Support file_mode here!
-            with open(previous_file_name, 'r', encoding='UTF-8') as previous_file:
-                with open(file_name, 'w', encoding='UTF-8') as file:
+        with open(file_name, 'w', encoding='UTF-8') as file:
+            previous = get_previous_entry_date(today)
+            if previous:
+                previous_file_name = date_to_entry_file_name(previous)
+                # TODO: Support file_mode here!
+                with open(previous_file_name, 'r', encoding='UTF-8') as previous_file:
                     copy_entry(previous_file, file)
 
     return file_name
